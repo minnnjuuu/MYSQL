@@ -19,14 +19,14 @@ member_name varchar(50) not null
 create table to_do_list(
 id int primary key not null auto_increment,
 to_do varchar(50),
+-- 기본값 NULL
 write_date timestamp,
+-- 기본값 현재시간
 complete_date timestamp,
+-- 완료 유무 기본값 false(0)
 user_id varchar(50) not null unique
 );
 
 show tables;
 describe member_info;
 describe to_do_list;
-
--- 하...짜증나 일대다 관계가 반대로 됨
--- 다시 만들어보셈
