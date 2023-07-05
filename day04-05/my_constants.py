@@ -1,3 +1,5 @@
+#python 에서 상수를 사용하기 위한 방법
+
 from typing import Final
 
 #Flask와 DB연동을 위한 상수들의 정의

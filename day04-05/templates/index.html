@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do App</title>
+</head>
+<body>
+    <!-- flask 에서는 HTML Template Engine(Jinja2)을 가지고 있다 -->
+    <!-- HTML Template Engine : 프로그램 요소를 만들어서 삽입 가능하도록 해주는 외부 라이브러리 -->
+    
+    
+    <h1>TO-DO APP.</h1>
+    <p>할일 관리 시스템</p>  
+    {% if login == True  %}    <!-- 프로그램코드를 쓸때에는  -->
+        <!-- 로그인 되었을때 보여지는 코드 -->
+        <h3>{{Nick_Name}}님, 환영합니다.</h3>    <!-- 값(변수)를 출력할 때에는  --> 
+        <p><a href = "/logout">로그아웃 </a></p>
+        <form action = "/insert_todo" method = "POST">
+            <input type = "text" placeholder = "할일을 입력해주세요" name = "InputTodo"/>
+            <input type = "submit" value = "저장" />
+        </form>
+
+        <table>
+        {% for row in todos %}
+        <tr>
+            <td>
+            {% if row[2] %}
+                <input type = "checkbox" onclick = "checkBoxClick(event, '{{row[0]}}','{{row[4]}}')" checked>
+                <td><del>{{ row[1] }}</del></td>
+                <td><del>{{ row[3] }}</del></td>
+            {% else %}
+                <input type = "checkbox" onclick = "checkBoxClick(event, '{{row[0]}}','{{row[4]}}')">
+                <td>{{ row[1] }}</td>
+                <td>{{ row[3] }}</td>
+            {% endif %}
+            </td>
+
+            <td><button>삭제</button></td>
+        </tr>
+        {% endfor %}
+        </table>
+
+    {% else %}
+    <!-- 로그인이 되지 않았을때 -->
+    <!-- html에서의 주석달기 -->
+    <!-- action : 입력폼으로부터 데이터를 전달받아서 처리할 대상 객체-->
+    <!-- method : 데이터를 처리대상에게 전달하는 방법 -->
+    <!-- HTTP Method : GET, POST-->
+
+
+        <form action="/login" method = "post"> 
+            <input type="email" placeholder = "이메일 아이디를 입력해주세요" name = "InputEmail"/>
+            <input type="password" placeholder = "비밀번호를 입력해주세요" name = "InputPassword"/>
+            <input type="submit" value = "로그인"/>
+
+        </form>  
+        <a href = "/signupform">회원가입을 해주세요 </a>
+    {% endif %}
+    <script src = "{{ url_for('static', filename = 'js/todo.js') }}"></script>
+</body>
+</html>
